@@ -1,0 +1,434 @@
+@media (max-width: 1200px) {
+    .header {
+        .header-toggler, .sidebar-toggler {
+            display: block;
+        }
+    }
+
+    .dropdown-menu .dropdown-scroll {
+        overflow: auto !important;
+    }
+
+    .header {
+        margin: 0;
+        left: 0;
+        right: 0;
+
+        .navigation-toggler {
+            display: block !important;
+        }
+
+        .header-body-right {
+            display: none;
+            background-color: $color-primary;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: $header-height;
+            padding: 10px 30px;
+
+            .navbar-nav {
+                margin-left: auto;
+            }
+
+            li {
+                a:not(.list-group-item) {
+                    color: white;
+
+                    &:hover, &:focus, &:active {
+                        color: rgba(white, .8) !important;
+                    }
+                }
+            }
+
+            &.open {
+                display: flex;
+            }
+        }
+
+        .header-search .input-group {
+            background-color: white;
+
+            .btn {
+                color: black
+            }
+
+            input.form-control {
+                &:focus {
+                    color: black;
+                }
+
+                &::placeholder {
+                    color: #9b9b9b
+                }
+            }
+        }
+    }
+
+    .sidebar-group {
+        display: none;
+
+        .sidebar-content {
+            overflow: auto !important;
+        }
+
+        &.collapse {
+            display: block;
+        }
+    }
+
+    .layout-wrapper .content-wrapper .content-body .content {
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+
+    .content-footer {
+        margin: 0 !important;
+        padding-left: 30px !important;
+    }
+
+    .navigation {
+        left: -80% !important;
+        opacity: 0;
+        transition: left .2s;
+        z-index: 1000;
+
+        &.open {
+            left: 0 !important;
+            opacity: 1;
+        }
+    }
+
+    .user-page {
+        padding: 20px;
+        height: auto;
+
+        .card {
+            width: auto;
+
+            .card-body {
+                padding: 30px;
+            }
+        }
+    }
+
+    .files-toggler, .components-toggler {
+        display: block;
+    }
+
+    .files-sidebar, .components-sidebar {
+        display: none;
+        position: fixed;
+        right: 0;
+        width: 300px;
+        max-width: 300px;
+        top: 0;
+        bottom: 0;
+        overflow: auto !important;
+        background-color: white;
+        z-index: 1000;
+        padding: 30px;
+
+        &.collapse {
+            display: block !important;
+        }
+    }
+}
+
+@media (max-width: 992px) {
+
+    .header {
+        ul.navbar-nav li.nav-item a.nav-link {
+            &.mobile-header-search-btn {
+                display: block;
+            }
+        }
+    }
+
+    .navigation ul li a {
+        padding: 7px 0;
+    }
+
+    .header-search-form {
+        display: none;
+        position: fixed !important;
+        background: rgba(0, 0, 0, 0.30);
+        right: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+
+        &.show {
+            display: block;
+        }
+
+        .header-search-close-btn {
+            display: block !important;
+        }
+
+        .btn {
+            padding: 20px !important;
+            font-size: 16px;
+        }
+
+        .form-control {
+            border-radius: 0 !important;
+            background-color: white !important;
+            padding: 20px 0 !important;
+            padding-left: 60px !important;
+            font-size: 16px;
+        }
+    }
+
+    .app-block {
+        position: relative;
+
+        .app-sidebar-menu-button {
+            display: inline-flex;
+            margin-right: 1rem;
+        }
+
+        .app-sidebar {
+            display: none;
+            position: absolute;
+            left: 0;
+            z-index: 9;
+            flex: 0 0 35%;
+            max-width: 35%;
+            bottom: 0;
+
+            .app-sidebar-menu {
+                overflow: auto;
+            }
+
+            &.show {
+                display: block;
+            }
+
+            & > .card {
+                box-shadow: 3px 0px 15px -10px black;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+
+        .app-content {
+            flex: 0 0 100%;
+            max-width: 100%;
+
+            .app-action {
+                flex-direction: column-reverse;
+
+                .action-right {
+                    margin-left: 0;
+                    margin-bottom: 1rem;
+                }
+            }
+
+            .app-detail .card-header {
+                flex-direction: column;
+                align-items: stretch !important;
+
+                .app-detail-action-right {
+                    margin-left: 0 !important;
+                    margin-top: 1rem;
+                }
+            }
+        }
+    }
+
+    .card {
+        margin-bottom: 1rem;
+
+        .card-body {
+            padding: 1.2rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+
+    body.form-membership .form-wrapper {
+        width: 90%;
+        margin: 30px auto;
+    }
+
+    .app-block .app-content .app-action .action-right {
+        form {
+            margin-right: 0 !important;
+        }
+
+        .app-pager {
+            display: none !important;
+        }
+    }
+
+    .app-block {
+        .app-sidebar {
+            flex: 0 0 70%;
+            max-width: 70%;
+        }
+    }
+
+    .toast-top-right {
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .toast-top-left {
+        top: 1rem;
+        left: 1rem;
+    }
+
+    .header {
+        .header-left {
+            width: auto;
+            background: none;
+        }
+    }
+
+    footer {
+        padding: 15px 20px;
+
+        .nav {
+            display: none;
+        }
+    }
+
+    .table-responsive-stack tr {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        border-bottom: 3px solid #ccc;
+        display: block;
+    }
+    /*  IE9 FIX   */
+    .table-responsive-stack td {
+        float: left \9
+    ;
+        width: 100%;
+    }
+
+    .sidebar {
+        & > ul.nav {
+            display: flex;
+
+            li.nav-item {
+                border: none;
+            }
+        }
+    }
+
+    .user-page {
+        padding: 20px;
+        height: auto;
+
+        .card {
+            width: 100%;
+
+            .card-body {
+                padding: 30px;
+            }
+        }
+    }
+
+    .fc {
+        .fc-toolbar {
+            &.fc-header-toolbar {
+                & > div {
+                    float: none !important;
+
+                    .fc-button-group {
+                        float: none !important;
+                    }
+
+                    &.fc-left {
+                        display: flex;
+                        justify-content: center;
+                        margin-bottom: 15px;
+                    }
+
+                    &.fc-right {
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+        }
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        padding-left: 0 !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .files-sidebar, .components-sidebar {
+        width: 80%;
+        max-width: 80%;
+    }
+}
+
+@media (max-width: 414px) {
+
+    .nav {
+        border: none;
+
+        li.nav-item {
+            margin-bottom: 0;
+
+            &:last-child {
+                border: none;
+            }
+
+            a.nav-link {
+                border: none;
+            }
+        }
+    }
+
+    .wizard > .steps > ul > li {
+        float: none;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .wizard > .content {
+        background: none;
+    }
+
+    .wizard > .content > .body {
+        position: static;
+        padding: 0;
+    }
+
+    .dataTables_wrapper {
+        .dataTables_filter {
+            display: block;
+        }
+    }
+}
+
+@media (max-width: 375px) {
+    nav.navbar {
+        .navbar-menu {
+            padding-left: 0;
+        }
+    }
+}
+
+@media (max-width: 544px) {
+    .text-xs-center {
+        text-align: center !important;
+    }
+    .text-xs-left {
+        text-align: left !important;
+    }
+    .text-xs-right {
+        text-align: right !important;
+    }
+}

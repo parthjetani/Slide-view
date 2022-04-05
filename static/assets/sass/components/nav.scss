@@ -1,0 +1,30 @@
+.nav-pills .nav-link.active {
+    background: $color-primary;
+}
+
+.nav-tabs .nav-link.active {
+    color: $color-primary
+}
+
+.nav-tabs .nav-link {
+    border-top-left-radius: .50rem;
+    border-top-right-radius: .50rem;
+}
+
+.nav-pills .nav-link {
+    border-radius: $default-border-radius;
+}
+
+.nav-analiytics-style {
+    .nav-link {
+        padding: .5rem 1.5rem;
+        border: 1px solid transparent;
+
+        &.active {
+            border-color: $color-primary;
+            border-radius: $default-border-radius;
+            background: none;
+            color: black;
+        }
+    }
+}

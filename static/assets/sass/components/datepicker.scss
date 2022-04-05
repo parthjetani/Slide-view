@@ -1,0 +1,17 @@
+.daterangepicker {
+    td.active {
+        background: $color-primary;
+
+        &:hover {
+            background: $color-primary;
+        }
+    }
+}
+
+.daterangepicker .ranges li.active {
+    background: $color-primary;
+}
+
+.daterangepicker.show-ranges .drp-calendar.left {
+    border-left-color: lighten($body-bg-color-dark-light, 15%);
+}

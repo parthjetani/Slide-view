@@ -1,0 +1,50 @@
+.sidebar-group {
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    width: $sidebar-width;
+    background-color: white;
+
+    .sidebar {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        right: -100%;
+        top: 0;
+        bottom: 0;
+        width: $sidebar-width;
+        display: flex;
+        flex-direction: column;
+        transition: right .2s;
+        background-color: white;
+        border-left: 1px solid #dfdfdf;
+
+        &.show {
+            visibility: visible;
+            opacity: 1;
+            right: 0;
+        }
+
+        &-header, &-footer {
+            padding: 30px;
+        }
+
+        &-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            h1, h2, h3, h4, h5, h6 {
+                margin-bottom: 0;
+            }
+        }
+
+        &-content {
+            flex: 1;
+            padding: 0 30px;
+            overflow: auto;
+        }
+    }
+}

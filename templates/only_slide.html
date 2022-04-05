@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PathHub</title>
+
+    <link rel="shortcut icon" href="/static/assets/media/image/favicon.png" />
+
+    <link rel="stylesheet" href="/static/vendors/bundle.css" type="text/css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/vendors/datepicker/daterangepicker.css" type="text/css">
+
+    <link rel="stylesheet" href="/static/assets/css/app.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/vendors/dataTable/datatables.min.css" type="text/css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/static/assets/css/custom.css" type="text/css">
+
+    <link href="/static/assets/css/jquery.treeview.css" rel="stylesheet">
+
+    <style>
+        div.dataTables_wrapper div.dataTables_filter label:after {
+            width: 34px;
+            line-height: 2;
+        }
+        div.dataTables_wrapper div.dataTables_filter {
+            position: relative;
+            top: -52px;
+            right: 12%;
+            max-width: 210px;
+            float: right;
+        }
+        .dataTables_length label {
+            color: transparent;
+        }
+        div.dataTables_wrapper div.dataTables_length select {
+            position: absolute;
+            top: -47px;
+            height: 36px !important;
+            width: 50px !important;
+            left: 26px;
+            padding: 0;
+            border-color: #ddd;
+            color: #444;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="layout-wrapper">
+         <!-- Header -->
+         <div class="header  header-full-width d-print-none">
+            <div class="header-container">
+                <div class="header-body">
+                    <div class="logo">
+                        <a href=index.html>
+                            <img src="/static/images/logo_white.png" alt="logo" class="company-logo">
+                        </a>
+                    </div>
+                    <div class="header-body-left ml-auto">
+                        <ul class="navbar-nav">
+                            <!-- <li class="nav-item navigation-toggler">
+                                <a href="#" class="nav-link">
+                                    <i class="ti-menu"></i>
+                                </a>
+                            </li> -->
+                            <li class="nav-item">
+                                <div class="header-search-form">
+                                    <form>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <button class="btn">
+                                                    <i class="ti-search"></i>
+                                                </button>
+                                            </div>
+                                            <input type="text" id="search-box" class="form-control"
+                                                placeholder="Search Folder">
+                                            <div class="input-group-append">
+                                                <button class="btn header-search-close-btn">
+                                                    <i data-feather="x"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="header-body-right">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link mobile-header-search-btn" title="Search">
+                                    <i class="ti-search"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" title="Dark">
+                                    <i class="fa fa-moon-o"></i>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link  {% if notifications %} nav-link-notify {% endif %}"
+                                    title="Notifications" data-toggle="dropdown">
+                                    <i class="ti-bell"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
+                                    <div class="bg-primary px-3 py-3">
+                                        <h6 class="mb-0">Notifications</h6>
+                                    </div>
+                                    <div class="dropdown-scroll">
+                                        {% if notifications %}
+                                        <ul class="list-group list-group-flush">
+                                            <li>
+                                                <a href="#" class="list-group-item d-flex hide-show-toggler">
+                                                    <div>
+                                                        <figure class="avatar mr-3">
+                                                            <span
+                                                                class="avatar-title bg-secondary-bright text-secondary rounded-circle">
+                                                                <i class="ti-server"></i>
+                                                            </span>
+                                                        </figure>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <p class="mb-0">
+                                                            Your storage space is running low!
+                                                            <i title="Mark as unread" data-toggle="tooltip"
+                                                                class="hide-show-toggler-item fa fa-check font-size-11 position-absolute right-0 top-0 mr-3 mt-3"></i>
+                                                        </p>
+                                                        <span class="text-muted small">4 sec ago</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                    <div class="px-3 py-2 text-right border-top">
+                                        {% if notifications %}
+                                        <ul class="list-inline small">
+                                            <li class="list-inline-item mb-0">
+                                                <a href="#">Mark All Read</a>
+                                            </li>
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a href="/auth/settings" class="nav-link" title="Settings">
+                                    <i class="ti-settings"></i>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link profile-nav-link dropdown-toggle" title="User menu"
+                                    data-toggle="dropdown">
+                                    <figure class="avatar avatar-sm mr-2">
+                                        <img src="/static/assets/media/image/user/man_avatar3.jpg"
+                                            class="rounded-circle" alt="avatar">
+                                    </figure>
+                                    <span class="mr-2 d-sm-inline d-none">{{user.username}}</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
+                                    <div class="text-center py-4"
+                                        data-background-image="/static/assets/media/image/image1.jpg">
+                                        <figure class="avatar avatar-lg mb-3 border-0">
+                                            <img src="/static/assets/media/image/user/man_avatar3.jpg"
+                                                class="rounded-circle" alt="image">
+                                        </figure>
+                                        <h5 class="mb-0">{{user.username}}</h5>
+                                    </div>
+                                    <div class="list-group list-group-flush">
+                                        <a href="/auth/settings" class="list-group-item"> <i class="fa fa-cog mr-2"></i>Settings</a>
+                                        <a href="/auth/logout" class="list-group-item"> <i class="fa fa-sign-out mr-2"></i>Sign Out!</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item header-toggler">
+                        <a href="#" class="nav-link">
+                            <i class="ti-arrow-down"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item sidebar-toggler">
+                        <a href="#" class="nav-link">
+                            <i class="ti-cloud"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- ./ Header -->
+
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+            <!-- begin::navigation -->
+            <div class="navigation">
+                
+                <ul>
+                    <li>
+                        <a href="/">
+                            <i class="nav-link-icon la la-dashboard"></i>
+                            <span class="nav-link-label">Dashboard</span>
+                            <i class="las la-angle-down ml-auto"></i>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="javascript:;"> <span>Admin Dashboard</span></a></li>
+                                <li><a href="javascript:;"> <span>User Dashboard</span></a></li>
+                                <li><a href="javascript:;"> <span>Menu Manager </span></a></li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a href="{% url 'my_folders' %}">
+                            <i class="nav-link-icon las la-folder-open"></i>
+                            <span class="nav-link-label">My folders</span>
+                            <i class="las la-angle-down ml-auto"></i>
+                        </a>
+                        <ul style="display: none;">
+                            <div id="tree" style="background-color: #34444c; color: #b7c0cd !important;"></div>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="active" href="{% url 'cases' %}">
+                            <i class="nav-link-icon las la-file-contract"></i>
+                            <span class="nav-link-label">Cases</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/auth/settings">
+                            <i class="nav-link-icon las la-cogs"></i>
+                            <span class="nav-link-label">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- end::navigation -->
+
+            <!-- Content body -->
+            <div class="content-body">
+                <!-- Content -->
+                <div class="content full-width">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <h3 class="page-title">Cases</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:;">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Cases</li>
+                            </ul>
+                        </div>                        
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-primary alert-dismissible fade" role="alert" id="alert-message">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="tg-haslayout">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="tg-filterhold">
+                                        <ul class="tg-filters record-list-filters">
+                                            <li class="tg-statusbar tg-flagcolor">
+                                                
+                                            </li>
+                                            <li class="tg-statusbar tg-flagcolor" style="padding: 5px">
+                                                <div class="tg-checkboxgroup tg-checkboxgroupvtwo numbers_check">
+                                                    <span class="tg-radio tg-flagcolor1">
+                                                        <input class="tat" name="tat" id="tat5" type="radio">
+                                                        <label for="tat5"><span>&lt;5</span></label>
+                                                    </span>
+                                                    <span class="tg-radio tg-flagcolor2">
+                                                        <input class="tat" type="radio" name="tat" id="tat10">
+                                                        <label for="tat10"><span>&lt;10</span></label>
+                                                    </span>
+                                                    <span class="tg-radio tg-flagcolor3">
+                                                        <input class="tat" type="radio" name="tat" id="tat20">
+                                                        <label for="tat20"><span>&lt;20</span></label>
+                                                    </span>
+                                                    <span class="tg-radio tg-flagcolor4">
+                                                        <input class="tat" type="radio" name="tat" id="tat30">
+                                                        <label for="tat30"><span>&gt;20</span></label>
+                                                    </span>
+                                                    <span class="tg-cancel tg-flagcolor4" style="display: none;">
+                                                        <input class="tat" type="radio" name="tat" id="all_tat">
+                                                        <label for="all_tat">
+                                                            <img src="/static/icons/clearAll.png" class="img-responsive clearAll">
+                                                        </label>
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            
+                                            <li class="tg-flagcolor" style="padding: 3px 8px">
+                                                <div class="tg-checkboxgroup tg-checkboxgroupvtwo flags_check">
+                                                                                    <span class="tg-radio tg-flagcolor1 first">
+                                                        
+                                                        <input type="radio" id="flag_blue" class="flag_status" name="flag_sorting">
+                                                        <label for="flag_blue"></label>
+                                                    </span>
+                                                    <span class="tg-radio tg-flagcolor2">
+                                                        
+                                                        <input type="radio" id="flag_green" class="flag_status" name="flag_sorting">
+                                                        <label for="flag_green"></label>
+                                                    </span>
+                                                    <span class="tg-radio tg-flagcolor3">
+                                                        
+                                                        <input type="radio" id="flag_yellow" class="flag_status" name="flag_sorting">
+                                                        <label for="flag_yellow"></label>
+                                                    </span>
+                                                    <span class="tg-radio tg-flagcolor4">
+                                                        
+                                                        <input type="radio" id="flag_black" class="flag_status" name="flag_sorting">
+                                                        <label for="flag_black"></label>
+                                                    </span>
+                                                    <span class="tg-radio tg-flagcolor5">
+                                                        
+                                                        <input type="radio" id="flag_red" class="flag_status" name="flag_sorting">
+                                                        <label for="flag_red"></label>
+                                                    </span>
+                                                    <span class="tg-cancel tg-flagcolor6" style="display: none">
+                                                        <input checked="" type="radio" class="flag_status" name="flag_sorting" id="flag_all">
+                                                        <label for="falg_all">
+                                                            <img src="/static/icons/clearAll.png" class="img-responsive clearAll">
+                                                        </label>
+                                                    </span>
+                                                </div>
+                                            </li>
+                    
+                                            <li class="tg-statusbar tg-flagcolor custome-flagcolors">
+                                                <div class="tg-checkboxgroup tg-checkboxgroupvtwo">
+                                                    
+                                                    <span class="tg-radio tg-flagcolor4" title="Urgent">
+                                                        <input id="report_urgent" class="report_urgency_status" type="radio" name="report_urgency">
+                                                        <label for="report_urgent">
+                                
+                                                            <img src="/static/icons/Urgent-wb.png" class="img-responsive uncheck">
+                                                            <img src="/static/icons/white/Urgent-wb-white.png" class="img-responsive checkd">
+                                                        </label>
+                                                    </span>
+                    
+                                                    <span class="tg-radio tg-flagcolor4" title="Routine">
+                                                        <input id="report_routine" class="report_urgency_status" type="radio" name="report_urgency">
+                                                        <label for="report_routine">
+                                                        <img src="/static/icons/Rotate.png" class="img-responsive uncheck">
+                                                            <img src="/static/icons/white/Rotate-white.png" class="img-responsive checkd">
+                                                        </label>
+                                                    </span>
+                    
+                                                    <span class="tg-radio tg-flagcolor4" title="2WW">
+                                                        <input id="report_2ww" class="report_urgency_status" type="radio" name="report_urgency">
+                                                        <label for="report_2ww">
+                                                            <img src="/static/icons/2ww-wc.png" class="img-responsive uncheck">
+                                                            <img src="/static/icons/white/2ww-wc-white.png" class="img-responsive checkd">
+                                                        </label>
+                                                    </span>
+                    
+                                                    <span class="tg-cancel tg-flagcolor4" title="Clear" style="display: none;">
+                                                        <input id="report_clear" class="report_urgency_status" type="radio" name="report_urgency">
+                                                        <label for="report_clear">
+                                                            <img src="/static/icons/clearAll.png" class="img-responsive clearAll">
+                                                        </label>
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            <li class="tg-statusbar tg-flagcolor custome-flagcolors last float-right" style="padding: 0 10px;">                              
+                                                <button type="submit" class="btn btn-default adv-search" data-toggle="collapse" data-target="#collapse_adv_search"><i class="fa fa-cog"></i></button>
+                                            </li>
+                                            <li class="tg-statusbar tg-flagcolor custome-flagcolors float-right nobefore search_li" style="padding: 0">
+                                                <!-- <div class="input-group">
+                                                    <input id="unpub_custom_filter" type="text" class="form-control" placeholder="Search">
+                                                    <div class="input-group-btn">
+                                                      <button class="btn btn-success" type="submit">
+                                                        <i class="fa fa-search"></i>
+                                                      </button>
+                                                    </div>
+                                                </div> -->
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                        <div class="col-md-12">
+                            <table class="table table-stripped" id="myStaticDatatable">
+                                <thead>
+                                    <tr>
+                                        <th>Sn #.</th>
+                                        <th>Case ID</th>
+                                        <th>Case No.</th>
+                                        <th>File Name</th>
+                                        <th>Folder Name</th>
+                                        <th>Created On</th>
+                                        <th>Created By</th>
+                                        <th>Image Size</th>
+                                        <th>Image Type</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in main_list %}
+                                    <tr>
+                                        <td>{{ item.sn_no }}</td>
+                                        <td>{{ item.id }}</td>
+                                        <td>{{ item.case_no }}</td>
+                                        <td class="hiddenRow">
+                                            <div id="file-row">
+                                                <p style="color: blue;cursor:pointer" onclick="window.open('/slide/{{item.id}}')">{{item.text}}
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td>{{ item.folder }}</td>
+                                        <td>{{ item.created_at }}</td>
+                                        <td>{{ item.created_by }}</td>
+                                        <td>{{ item.image_size }}</td>
+                                        <td>{{ item.type }}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-floating" data-toggle="dropdown">
+                                                <i class="ti-more-alt"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a href="#" onclick="edit_file({{item.id}})"
+                                                    class="dropdown-item">Edit</a>
+                                                <a href="/slide/{{item.id}}/download/" class="dropdown-item" download>Download</a>
+                                                <a href="#" onclick="delete_file({{item.id}})" class="dropdown-item">Delete</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editfile-modal" tabindex="-1" role="dialog" aria-hidden="true"> 
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editfile-modalTitle">Edit File</h5>
+                        <button type="button" class="close editfile-modal-close-button" data-dismiss="modal"
+                            aria-label="Close">
+                            <i class="ti-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="needs-validation" id="editfile-form" novalidate>
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="edit-slidename-input">Slide Name</label>
+                                    <input type="text" class="form-control" id="edit-slidename-input"
+                                        placeholder="Slide Name" name="slidename" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="edit-slidename-input">Case Number</label>
+                                    <input type="text" class="form-control" id="edit-caseNumber-input"
+                                        placeholder="Case Number" name="case_no" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="edit-scannedby-input">Scanned By</label>
+                                    <input name="scanned_by" type="text" class="form-control"
+                                        id="edit-scannedby-input" placeholder="Scanned By">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="edit-scanneddate-input">Scanned Date</label>
+                                    <input autocomplete="off" type="text" name="scanned_date"
+                                        class="form-control datepicker-input" id="edit-scanneddate-input"
+                                        placeholder="Scanned Date">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="edit-insertedby-input">Inserted By</label>
+                                    <input name="inserted_by" type="text" class="form-control"
+                                        id="edit-insertedby-input" placeholder="Inserted By">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="edit-inserteddate-input">Inserted Date</label>
+                                    <input autocomplete="off" name="inserted_date" type="text"
+                                        class="form-control datepicker-input" id="edit-inserteddate-input"
+                                        placeholder="Inserted Date">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-slidetype-input">Slide Type</label>
+                                <select name="slide_type" class="form-control" id="edit-slidetype-input" required>
+                                    <option value="">...</option>
+                                    <option value="1">DICOM</option>
+                                    <option value="2">OpenSlide</option>
+                                </select>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input name="annotations" type="checkbox" class="custom-control-input"
+                                        id="edit-annotations-input" checked>
+                                    <label class="custom-control-label"
+                                        for="edit-annotations-input">Annotations</label>
+                                </div>
+                            </div>
+
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary" id="editfile-add-button">Save</button>
+                                <button type="button" class="btn btn-secondary editfile-modal-close-button"
+                                    data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="delete-modalTitle">Permanently delete?</h5>
+                        <button type="button" class="delete-model-close-button" data-dismiss="modal" aria-label="Close" style="border: aliceblue;">
+                            <i class="ti-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="needs-validation" novalidate id="delete-form">
+                            <button type="button" class="btn btn-secondary delete-model-close-button" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" id="delete-file-button">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="/static/vendors/bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.9/justgage.min.js"></script>
+    <script src="/static/vendors/datepicker/daterangepicker.js"></script>
+
+    <!-- DataTable -->
+    <script src="/static/vendors/dataTable/datatables.min.js"></script>
+
+    <!-- App scripts -->
+    <script src="/static/assets/js/app.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    
+    <script type="text/javascript" src="/static/assets/js/jquery.treeview.js"></script>
+
+    <script>
+        $(function () {
+            $.ajax({
+                url: '/api/only-folder',
+                type: 'get',
+            }).done(function(data) {
+                var tw = new TreeView(data['folder']);
+                document.getElementById('tree').appendChild(tw.root);
+            }
+        )});
+        $('.delete-model-close-button').click(function() {
+            $('#delete-modal').modal('hide');
+        });
+        $('.editfile-modal-close-button').click(function() {
+            $('#editfile-modal').modal('hide');
+        });
+        $("#delete-file-button").on('click', function (e) {
+            var id = $(this).attr('data-id');
+            var type = $(this).attr('data-type');
+            if (type === 'file') {
+                $.get("/api/file/delete?file_id=" + id, function (data) {
+                    $("#delete-modal").modal('hide');
+                    if (data.type === 'success') {
+                        window.location.reload();
+                    } else {
+                        message(data.message, 'danger');
+                    }
+                }).fail(function (err) {
+                    console.log(err);
+                    message('Server error, try again later', 'danger');
+                });
+            }
+        });
+
+        function message(msg, level = 'info') {
+            $("#alert-message").show().html(msg);
+            $("#alert-message").removeClass().addClass('alert').addClass('alert-' + level);
+            setTimeout(function () {
+                $("#alert-message").fadeOut();
+            }, 2500);
+        }
+        $(document).ready(function () {
+            $('#myStaticDatatable').DataTable({"ordering": false});
+        });
+
+        function delete_file(file_id) {
+            $("#delete-file-button").attr('data-id', file_id);
+            $("#delete-file-button").attr('data-type', 'file');
+            $("#delete-modal").modal('show');
+        }
+
+        function edit_file(file_id) {
+            $.get(`/api/file/get?slide_id=${file_id}`, function (data) {
+                if (data.type === 'success') {
+                    $("#edit-slidename-input").val(data.slide.Name);
+                    $("#edit-scannedby-input").val(data.slide.ScannedBy);
+                    $("#edit-scanneddate-input").val(data.slide.ScannedDate);
+                    $("#edit-insertedby-input").val(data.slide.InsertedBy);
+                    $("#edit-inserteddate-input").val(data.slide.InsertedDate);
+                    $("#edit-slidetype-input").val(data.slide.SlideType);
+                    $("#edit-caseNumber-input").val(data.slide.CaseNo);
+
+                    if (data.slide.annotations) {
+                        $("#edit-annotaions-input").attr('checked', true);
+                    } else {
+                        $("#edit-annotaions-input").attr('checked', false);
+                    }
+                    $("#editfile-add-button").attr('data-id', data.slide.id);
+                    $("#editfile-modal").modal('show');
+                } else {
+                    message(data.message, 'danger');
+                }
+            }).fail(function (err) {
+                message('Server error, try again later', 'danger');
+                console.log(err);
+            });
+        }
+        $("#editfile-form").on('submit', function(e) {
+            e.preventDefault();
+            var id = $("#editfile-add-button").attr('data-id');
+            var form_data = $(this).serializeArray();
+            var data = {};
+            $(form_data).each(function(index, obj) {
+                data[obj.name] = obj.value;
+            });
+            data['id'] = id;
+            $.post('/api/file/edit', data, function(response) {
+                if (response.type === 'success') {
+                    $("#editfile-modal").modal('hide');
+                    message('Slide saved successfully', 'success');
+                    window.location.reload();
+                }else{
+                    $("#editfile-form").addClass('was-validated');
+                    for (let i = 0 ; i < response.errors.length; i++) {
+                        var err = response.errors[i];
+                        $("#editfile-form").find(`input[name="${err.name}"], select[name="${err.name}"]`).addClass('is-invalid').siblings('.invalid-feedback').html(err.message);
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $(".tg-cancel label").click(function() {
+                $(this).parent("span").find("input").prop("checked", true);
+                $(this).parent("span").find("input").trigger("click");
+            });
+            $('.tg-radio').click(function(){
+                $(this).parent().children('.tg-cancel').show();
+            });
+            $('.tg-cancel').click(function(){
+                $(this).hide();
+            });
+        })
+    </script>
+
+</body>
+
+</html>

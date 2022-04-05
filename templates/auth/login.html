@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pathhub</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/static/assets/media/image/favicon.png"/>
+
+    <!-- Plugin styles -->
+    <link rel="stylesheet" href="/static/vendors/bundle.css" type="text/css">
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="/static/assets/css/app.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/assets/css/custom.css" type="text/css">
+</head>
+<body class="form-membership">
+
+<!-- begin::preloader-->
+<div class="preloader">
+    <div class="preloader-icon"></div>
+</div>
+<!-- end::preloader -->
+
+<div class="form-wrapper">
+
+    <!-- logo -->
+    <div id="logo" class="mt-0 mb-3">
+        <img src="/static/images/logo.png" alt="image" class="img-fluid" style="max-width: 220px;">
+    </div>
+    <!-- ./ logo -->
+
+    
+    <h4 class="mb-4">Log in</h4>
+
+    <!-- form -->
+    <form id="login-form">
+        {% csrf_token %}
+        <p class="text-danger" id="error-message" style="display: none;">Wrong username or password</p>
+        <div class="form-group">
+            <input id="username" type="text" class="form-control form-control-lg" placeholder="Username" required autofocus>
+        </div>
+        <div class="form-group">
+            <input id="password" type="password" class="form-control form-control-lg" placeholder="Password" required>
+        </div>
+        <div class="form-group d-flex justify-content-between">
+            <div class="custom-control custom-checkbox">
+                
+            </div>
+            <a href="#">Reset password</a>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block">Log in</button>
+    </form>
+    <!-- ./ form -->
+
+
+</div>
+
+<!-- Plugin scripts -->
+<script src="/static/vendors/bundle.js"></script>
+
+<!-- App scripts -->
+<script src="/static/assets/js/app.min.js"></script>
+{% if javascripts %}
+{% for js in javascripts %}
+    <script src="/static/assets/js/{{js}}"></script>
+{% endfor %}
+{% endif %}
+</body>
+</html>

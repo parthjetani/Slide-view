@@ -1,0 +1,14 @@
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    position: relative;
+    font-size: 15px;
+    color: black;
+
+    &.no-scroll {
+        overflow: hidden;
+    }
+}
+
+* {
+    min-width: 0;
+}

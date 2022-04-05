@@ -1,0 +1,21 @@
+asgiref
+# backports.zoneinfo
+Django==2.2.26
+django-cleanup
+mysql-connector-python
+mysqlclient
+numpy
+openslide-python
+Pillow
+protobuf
+psutil
+pydicom
+pylibjpeg
+pylibjpeg-libjpeg
+pylibjpeg-openjpeg
+pylibjpeg-rle
+pytz
+six
+sqlparse
+watchdog
+

@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PathHub</title>
+
+    <link rel="shortcut icon" href="/static/assets/media/image/favicon.png" />
+
+    <link rel="stylesheet" href="/static/vendors/bundle.css" type="text/css">
+
+    <link rel="stylesheet" href="/static/assets/css/app.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/assets/css/custom.css" type="text/css">
+
+    <link href="/static/assets/css/jquery.treeview.css" rel="stylesheet">
+
+    <style>
+        input[type='text'],
+        input[type='email']{
+            display: block;
+            width: 100%;
+            height: calc(1.5em + .75rem + 2px);
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="layout-wrapper">
+        <div class="header  header-full-width d-print-none">
+            <div class="header-container">
+                <div class="header-body">
+                    <div class="logo">
+                        <a href=index.html>
+                            <img src="/static/images/logo_white.png" alt="logo" class="company-logo">
+                        </a>
+                    </div>
+                    <div class="header-body-left ml-auto">
+                        <ul class="navbar-nav">
+                            <!-- <li class="nav-item navigation-toggler">
+                                <a href="#" class="nav-link">
+                                    <i class="ti-menu"></i>
+                                </a>
+                            </li> -->
+                            <li class="nav-item">
+                                <div class="header-search-form">
+                                    <form>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <button class="btn">
+                                                    <i class="ti-search"></i>
+                                                </button>
+                                            </div>
+                                            <input type="text" id="search-box" class="form-control"
+                                                placeholder="Search Folder">
+                                            <div class="input-group-append">
+                                                <button class="btn header-search-close-btn">
+                                                    <i data-feather="x"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="header-body-right">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link mobile-header-search-btn" title="Search">
+                                    <i class="ti-search"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" title="Dark">
+                                    <i class="fa fa-moon-o"></i>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link  {% if notifications %} nav-link-notify {% endif %}"
+                                    title="Notifications" data-toggle="dropdown">
+                                    <i class="ti-bell"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
+                                    <div class="bg-primary px-3 py-3">
+                                        <h6 class="mb-0">Notifications</h6>
+                                    </div>
+                                    <div class="dropdown-scroll">
+                                        {% if notifications %}
+                                        <ul class="list-group list-group-flush">
+                                            <li>
+                                                <a href="#" class="list-group-item d-flex hide-show-toggler">
+                                                    <div>
+                                                        <figure class="avatar mr-3">
+                                                            <span
+                                                                class="avatar-title bg-secondary-bright text-secondary rounded-circle">
+                                                                <i class="ti-server"></i>
+                                                            </span>
+                                                        </figure>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <p class="mb-0">
+                                                            Your storage space is running low!
+                                                            <i title="Mark as unread" data-toggle="tooltip"
+                                                                class="hide-show-toggler-item fa fa-check font-size-11 position-absolute right-0 top-0 mr-3 mt-3"></i>
+                                                        </p>
+                                                        <span class="text-muted small">4 sec ago</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                    <div class="px-3 py-2 text-right border-top">
+                                        {% if notifications %}
+                                        <ul class="list-inline small">
+                                            <li class="list-inline-item mb-0">
+                                                <a href="#">Mark All Read</a>
+                                            </li>
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a href="/auth/settings" class="nav-link" title="Settings">
+                                    <i class="ti-settings"></i>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link profile-nav-link dropdown-toggle" title="User menu"
+                                    data-toggle="dropdown">
+                                    <figure class="avatar avatar-sm mr-2">
+                                        <img src="/static/assets/media/image/user/man_avatar3.jpg"
+                                            class="rounded-circle" alt="avatar">
+                                    </figure>
+                                    <span class="mr-2 d-sm-inline d-none">{{user.username}}</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
+                                    <div class="text-center py-4"
+                                        data-background-image="/static/assets/media/image/image1.jpg">
+                                        <figure class="avatar avatar-lg mb-3 border-0">
+                                            <img src="/static/assets/media/image/user/man_avatar3.jpg"
+                                                class="rounded-circle" alt="image">
+                                        </figure>
+                                        <h5 class="mb-0">{{user.username}}</h5>
+                                    </div>
+                                    <div class="list-group list-group-flush">
+                                        <a href="/auth/settings" class="list-group-item"> <i class="fa fa-cog mr-2"></i>Settings</a>
+                                        <a href="/auth/logout" class="list-group-item"> <i class="fa fa-sign-out mr-2"></i>Sign Out!</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item header-toggler">
+                        <a href="#" class="nav-link">
+                            <i class="ti-arrow-down"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item sidebar-toggler">
+                        <a href="#" class="nav-link">
+                            <i class="ti-cloud"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- ./ Header -->
+
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+            <!-- begin::navigation -->
+            <div class="navigation">
+                
+                <ul>
+                    <li>
+                        <a href="/">
+                            <i class="nav-link-icon la la-dashboard"></i>
+                            <span class="nav-link-label">Dashboard</span>
+                            <i class="las la-angle-down ml-auto"></i>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="javascript:;"> <span>Admin Dashboard</span></a></li>
+                                <li><a href="javascript:;"> <span>User Dashboard</span></a></li>
+                                <li><a href="javascript:;"> <span>Menu Manager </span></a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'my_folders' %}">
+                            <i class="nav-link-icon las la-folder-open"></i>
+                            <span class="nav-link-label">My folders</span>
+                            <i class="las la-angle-down ml-auto"></i>
+                        </a>
+                        <ul style="display: none;">
+                            <div id="tree" style="background-color: #34444c; color: #b7c0cd !important;"></div>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'cases' %}">
+                            <i class="nav-link-icon las la-file-contract"></i>
+                            <span class="nav-link-label">Cases</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="active" href="/auth/settings">
+                            <i class="nav-link-icon las la-cogs"></i>
+                            <span class="nav-link-label">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- end::navigation -->
+
+            <!-- Content body -->
+            <div class="content-body">
+                <!-- Content -->
+                <div class="content full-width">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <h3 class="page-title">Settings</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:;">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Account Settings</li>
+                            </ul>
+                        </div>                        
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-primary alert-dismissible fade" role="alert" id="alert-message">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                        <div class="col-md-6 mx-auto">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img class="profile-pic" src="{{ request.user.customuser.avatar.url }}" >
+                                </div>
+                                <div class="col-md-8">
+                                    <form method="POST" class="post-form" enctype='multipart/form-data' action="/auth/settings">
+                                        {% csrf_token %}
+                                            <div class="form-group">
+                                                <label class="">Change Avatar:</label>
+                                                {{ profile_form.avatar }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="">Username:</label>
+                                                {{ user_form.username }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="">First Name:</label>
+                                                {{ user_form.first_name }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="">Last Name:</label>
+                                                {{ user_form.last_name }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="">Email:</label>
+                                                {{ user_form.email }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="">Organization Name:</label>
+                                                {{ profile_form.organization_name }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="">Organization Role:</label>
+                                                {{ profile_form.organization_role }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="">Phone Number:</label>
+                                                {{ profile_form.phone_number }}
+                                            </div>
+                                            <div class="form-group text-center">
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script src="/static/vendors/bundle.js"></script>
+
+    <!-- App scripts -->
+    <script src="/static/assets/js/app.min.js"></script>
+
+	<script type="text/javascript" src="/static/assets/js/jquery.treeview.js"></script>
+    
+    <script>
+        $(function () {
+            $.ajax({
+                url: '/api/only-folder',
+                type: 'get',
+            }).done(function(data) {
+                var tw = new TreeView(data['folder']);
+                document.getElementById('tree').appendChild(tw.root);
+            }
+        )});
+    </script>
+
+</body>
+
+</html>
