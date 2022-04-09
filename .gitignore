@@ -132,3 +132,5 @@ slides/
 media/
 *.svs
 *.sql
+
+.idea
