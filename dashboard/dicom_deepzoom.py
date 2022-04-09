@@ -1,41 +1,3 @@
-#!/usr/bin/env python3
-
-#
-#  Deep Zoom Tools
-#
-#  Copyright (c) 2008-2019, Daniel Gasienica <daniel@gasienica.ch>
-#  Copyright (c) 2008-2011, OpenZoom <http://openzoom.org>
-#  Copyright (c) 2010, Boris Bluntschli <boris@bluntschli.ch>
-#  Copyright (c) 2008, Kapil Thangavelu <kapil.foss@gmail.com>
-#  All rights reserved.
-#
-#  Redistribution and use in source and binary forms, with or without modification,
-#  are permitted provided that the following conditions are met:
-#
-#      1. Redistributions of source code must retain the above copyright notice,
-#         this list of conditions and the following disclaimer.
-#
-#      2. Redistributions in binary form must reproduce the above copyright
-#         notice, this list of conditions and the following disclaimer in the
-#         documentation and/or other materials provided with the distribution.
-#
-#      3. Neither the name of OpenZoom nor the names of its contributors may be used
-#         to endorse or promote products derived from this software without
-#         specific prior written permission.
-#
-#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-#  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-#  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-#  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-#  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-#  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-#  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-#  ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-#  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-
 import io
 import math
 import optparse
@@ -108,7 +70,7 @@ def get_PIL_image(dataset):
     if ('PixelData' not in dataset):
         raise TypeError("Cannot show image -- DICOM dataset does not have "
                         "pixel data")
-    # can only apply LUT if these window info exists
+
     if ('WindowWidth' not in dataset) or ('WindowCenter' not in dataset):
         bits = dataset.BitsAllocated
         samples = dataset.SamplesPerPixel
@@ -117,19 +79,13 @@ def get_PIL_image(dataset):
         elif bits == 8 and samples == 3:
             mode = "RGB"
         elif bits == 16:
-            # not sure about this -- PIL source says is 'experimental'
-            # and no documentation. Also, should bytes swap depending
-            # on endian of file and system??
             mode = "RGB"
         else:
             raise TypeError("Don't know PIL mode for %d BitsAllocated "
                             "and %d SamplesPerPixel" % (bits, samples))
 
-        # PIL size = (width, height)
         size = (dataset.Columns, dataset.Rows)
 
-        # Recommended to specify all details
-        # by http://www.pythonware.com/library/pil/handbook/image.htm
         im = PIL.Image.frombuffer(mode, size, dataset.PixelData,
                                   "raw", mode, 0, 1)
 
@@ -139,8 +95,6 @@ def get_PIL_image(dataset):
         ww = int(ew.value[0] if ew.VM > 1 else ew.value)
         wc = int(ec.value[0] if ec.VM > 1 else ec.value)
         image = get_LUT_value(dataset.pixel_array, ww, wc)
-        # Convert mode to L since LUT has only 256 values:
-        #   http://www.pythonware.com/library/pil/handbook/image.htm
         im = PIL.Image.fromarray(image).convert('L')
 
     return im

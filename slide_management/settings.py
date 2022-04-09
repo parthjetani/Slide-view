@@ -11,29 +11,23 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import sys
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print("Base Directory Path: ", BASE_DIR)
-print("Version Infosss:", sys.version)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%&mrvyoxekxi%gj+_lrt6oijom-n$grciss=pf$m38w8zc#3$d'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'slide-management.uralensis.com', 'www.slide-management.uralensis.com', '127.0.0.1',
-                 'demo.slide-management.uralensis.com', 'uralensis.com']
-# ALLOWED_HOSTS = ['slide-management.uralensis.com', 'www.slide-management.uralensis.com','127.0.0.1']
-
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -82,23 +76,13 @@ WSGI_APPLICATION = 'slide_management.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wpuralen_slides_management',
-        'USER': 'root',
-        'PASSWORD': 'password123#',
-        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-        'OPTIONS': {
-            'init_command': 'SET innodb_strict_mode=1',
-        }
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR + 'db.sqlite3',
-#     }
-# }
 
 
 # Password validation
@@ -119,9 +103,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# or, depending on your configuration:
-DEFAULT_DOMAIN = '//{}'.format(ALLOWED_HOSTS[0])
-
 LOGIN_URL = '/auth/login'
 
 # Internationalization
@@ -141,13 +122,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static/'),
 )
 
-MEDIA_DIR = "D:\slider-view"
+MEDIA_DIR = BASE_DIR
 
 MEDIA_URL = '/media/'
 
@@ -176,31 +156,3 @@ VALID_SLIDE_EXT = [
 
 VALID_SLIDE_TYPE = [('1', 'DICOM'), ('2', 'OpenSlide')]
 
-PATHHUB_REST_USER = 'admin'
-PATHHUB_REST_PASSWORD = 'HwuKUP2LrZH5XgQk'
-PATHHUB_REST_URL = 'https://demo.uralensiswebapp.co.uk/api/'
-
-X_FRAME_OPTIONS = 'ALLOW-FROM virtualacp.com, ftmsk.uralensiswebapp.co.uk mskcc.uralensisdigital.co.uk mskcc.uralensiswebapp.co.uk demo.uralensiswebapp.co.uk'
-CSRF_TRUSTED_ORIGINS = ['virtualacp.com', 'ftmsk.uralensiswebapp.co.uk', 'mskcc.uralesnsisdigital.co.uk',
-                        'mskcc.uralensisdigital.co.uk/development', 'mskcc.uralensiswebapp.co.uk',
-                        'demo.uralensiswebapp.co.uk']
-CSRF_COOKIE_SAMESITE = None
-
-STATIC_ROOT = "statics"
-
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
-
-sentry_sdk.init(
-    dsn="https://d14cdcc39fdb4883b8cdf4d5f2d9055b@o1146271.ingest.sentry.io/6214798",
-    integrations=[DjangoIntegration()],
-
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production.
-    traces_sample_rate=1.0,
-
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True
-)

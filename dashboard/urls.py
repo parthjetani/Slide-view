@@ -27,29 +27,3 @@ urlpatterns = [
     path('my_folders/', views.my_folders, name='my_folders'),
     path('my_slides/', views.my_slides, name='my-slides'),
 ]
-
-
-from .FTPWatchdog import FileProcessStateMachine, FileStatusHandler
-import threading
-# ftp_loc = ''
-# with open('.env', 'r') as env:
-#     lines = env.readlines()
-#     for line in lines:
-#         if 'FTP_LOC' in line:
-#             parts = line.split('=')
-#             ftp_loc = parts[1].strip()
-
-# print(ftp_loc)
-
-# from .FTPWatchdog import initial_scan
-# initial_scan(ftp_loc)
-# print("Initial scan done")
-
-# fpsm = FileProcessStateMachine(ftp_loc)
-# fileHandler = FileStatusHandler(ftp_loc, fpsm)
-# if fileHandler is not None and not fileHandler.isRunning():
-#     fileHandler.start()
-#     print("Started watchdog")
-
-# for thread in threading.enumerate(): 
-#     print(thread.name)
