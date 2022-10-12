@@ -3,7 +3,6 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    path('sample', views.sample_page, name="sample_page"),
     url(r'^slide/(?P<slide_id>\d+)/$', views.slide),
     url(r'^slide/(?P<slide_id>\d+)/thumbnail/$', views.gen_thumbnail_url),
     url(r'^slide/(?P<slide_id>\d+)/fullthumbnail/$', views.get_thumbnail),

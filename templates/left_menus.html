@@ -68,7 +68,7 @@
             <div class="header-container">
                 <div class="header-body">
                     <div class="logo">
-                        <a href=index.html>
+                        <a href="/">
                             <img src="/static/images/logo_white.png" alt="logo" class="company-logo">
                         </a>
                     </div>
@@ -172,7 +172,7 @@
                                 <a href="#" class="nav-link profile-nav-link dropdown-toggle" title="User menu"
                                     data-toggle="dropdown">
                                     <figure class="avatar avatar-sm mr-2">
-                                        <img src="/static/assets/media/image/user/man_avatar3.jpg"
+                                        <img src="{{request.user.customuser.avatar.url}}"
                                             class="rounded-circle" alt="avatar">
                                     </figure>
                                     <span class="mr-2 d-sm-inline d-none">{{user.username}}</span>
@@ -181,7 +181,7 @@
                                     <div class="text-center py-4"
                                         data-background-image="/static/assets/media/image/image1.jpg">
                                         <figure class="avatar avatar-lg mb-3 border-0">
-                                            <img src="/static/assets/media/image/user/man_avatar3.jpg"
+                                            <img src="{{request.user.customuser.avatar.url}}"
                                                 class="rounded-circle" alt="image">
                                         </figure>
                                         <h5 class="mb-0">{{user.username}}</h5>
